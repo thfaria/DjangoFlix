@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Resultado da Pesquisa - Djangoflix
+{% endblock %}
+
+
+{% block content %}
+    <main class="bg-primary_black min-h-screen w-full">
+        <sector class="bg-primary_black min-h-screen flex justify-center py-10">
+            <div class="p-8 w-10/12 relative">
+                {% if object_list %}
+                    <h2 class="text-white text-2xl font-medium">
+                        Resultado da Busca para "{{ request.GET.query }}""
+                    </h2>
+                    <div class="flex flex-wrap items-center min-w-full movie_lis">
+                    {% for filme in object_list %}
+                        <div class="m-4 bg-red-600 text-white overflow-hidden flex-shrink-0 rounded-md cursor-poiter h-64 w-96">
+                            {{ filme.titulo }}
+                            <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+                                <img src="{{ filme.thumb.url }}" class="object-cover w-full h-full" alt="">
+                            </a>
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-center text-white text-2xl font-medium">
+                        Nenhum filme encontrado com o título "{{ request.GET.query }}"
+                        <br>
+                        Tente novamente
+                    </p>
+                {% endif %}
+            </div>
+        </sector>
+    </main>
+{% endblock %}
